@@ -40,12 +40,12 @@ def submit_form(request):
             diamond_data_list.append(diamond_row_obj)
 
     diamond_df = pd.DataFrame(diamond_data_list)
-    diamond_df.to_csv('E:\expected_output.csv', index=False)
-
+    output_path = 'E://expected_output.csv' if os.path.exists('E://') else 'D://expected_output.csv'
+    diamond_df.to_csv(output_path, index=False)
     return render(request, 'getcsvfile/download.html')
 
 def download_csv(request):
-    file_path = 'E:/expected_output.csv'
+    file_path = 'E://expected_output.csv' if os.path.exists('E://') else 'D://expected_output.csv'
     if os.path.exists(file_path):
         response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename='expected_output.csv')
         return response
